@@ -5,24 +5,28 @@ import sbt.Keys._
 import sbt._
 
 object SwaggerPlugin extends AutoPlugin {
-    object autoImport {
-      val generateSwaggerApiDoc = TaskKey[Unit]("generate-swagger-api-doc")
+  object autoImport {
+    val generateSwaggerApiDoc = TaskKey[Unit]("generate-swagger-api-doc")
 
-      val swaggerApiDocTarget = SettingKey[File]("swagger-api-doc-target")
+    val swaggerApiDocTarget = SettingKey[File]("swagger-api-doc-target")
 
-      val swaggerApiFile = SettingKey[File]("swagger-api-file")
-    }
+    val swaggerApiFile = SettingKey[File]("swagger-api-file")
+  }
   import autoImport._
 
-override lazy val projectSettings = Seq(
-  swaggerApiFile := baseDirectory.value / "specs" / "api.yaml",
-  swaggerApiDocTarget := baseDirectory.value / "specs" / "api",
-  generateSwaggerApiDoc := {
-    Swagger2MarkupConverter
-      .from(swaggerApiFile.value.toPath)
-      .withConfig(SafeSwagger2MarkupConfig)
-      .build()
-      .toFile(swaggerApiDocTarget.value.toPath)
-  }
-)
+  override def trigger = allRequirements
+
+  override lazy val projectSettings = Seq(
+    swaggerApiFile := baseDirectory.value / "specs" / "api.yaml",
+
+    swaggerApiDocTarget := baseDirectory.value / "specs" / "api",
+    
+    generateSwaggerApiDoc := {
+      Swagger2MarkupConverter
+        .from(swaggerApiFile.value.toPath)
+        .withConfig(SafeSwagger2MarkupConfig)
+        .build()
+        .toFile(swaggerApiDocTarget.value.toPath)
+    }
+  )
 }
