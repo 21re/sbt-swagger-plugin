@@ -20,7 +20,7 @@ object SwaggerPlugin extends AutoPlugin {
     swaggerApiFile := baseDirectory.value / "specs" / "api.yaml",
 
     swaggerApiDocTarget := baseDirectory.value / "specs" / "api",
-    
+
     generateSwaggerApiDoc := {
       Swagger2MarkupConverter
         .from(swaggerApiFile.value.toPath)
