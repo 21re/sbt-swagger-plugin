@@ -18,9 +18,7 @@ object SwaggerPlugin extends AutoPlugin {
 
   override lazy val projectSettings = Seq(
     swaggerApiFile := baseDirectory.value / "specs" / "api.yaml",
-
     swaggerApiDocTarget := baseDirectory.value / "specs" / "api",
-
     generateSwaggerApiDoc := {
       Swagger2MarkupConverter
         .from(swaggerApiFile.value.toPath)

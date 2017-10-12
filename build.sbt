@@ -6,6 +6,8 @@ version := {
   "0.1-" + sys.props.get("BUILD_NUMBER").orElse(sys.env.get("BUILD_NUMBER")).getOrElse("SNAPSHOT")
 }
 
+crossSbtVersions := Seq("1.0.2", "0.13.16")
+
 sbtPlugin := true
 
 libraryDependencies ++= Seq(
